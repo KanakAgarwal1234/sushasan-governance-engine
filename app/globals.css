@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Desktop app-shell: wide AND tall enough for two fixed-height columns. */
+@custom-variant shell (@media (min-width: 64rem) and (min-height: 40rem));
+
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-serif: var(--font-serif-display), ui-serif, Georgia, Cambria, serif;
@@ -43,21 +46,27 @@ body {
   background-size: 32px 32px;
 }
 
-/* Left "Select an episode" panel on desktop: bounded to the viewport so its
-   whole height (incl. the Run button) is always reachable by scrolling the
-   panel itself. 100vh is the fallback for browsers without dvh. */
-@media (min-width: 64rem) {
-  .sidebar-scroll {
-    max-height: calc(100vh - 3rem);
-    scrollbar-width: thin;
-    scrollbar-color: #c4d0e4 transparent;
-    border-radius: 1rem;
+/* Desktop app-shell: the page is exactly one viewport tall and never scrolls;
+   the sidebar and memo columns scroll independently inside it, so a trackpad
+   gesture can't get trapped between a panel and the page. 100vh is the
+   fallback for browsers without dvh. */
+@media (min-width: 64rem) and (min-height: 40rem) {
+  .app-shell {
+    height: 100vh;
+    overflow: hidden;
   }
 
   @supports (height: 100dvh) {
-    .sidebar-scroll {
-      max-height: calc(100dvh - 3rem);
+    .app-shell {
+      height: 100dvh;
     }
+  }
+
+  .scroll-pane {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #c4d0e4 transparent;
   }
 }
 
@@ -92,6 +101,12 @@ body {
 @media print {
   .no-print {
     display: none !important;
+  }
+  .app-shell,
+  .scroll-pane {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
   body {
     background: #ffffff;

@@ -8,12 +8,11 @@ export const dynamic = "force-dynamic";
 export default function Home() {
   const liveMode = llmConfigured();
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="app-shell flex min-h-screen flex-col shell:min-h-0">
       <Header liveMode={liveMode} />
-      <main className="relative flex-1">
-        <DiagnosticEngine liveMode={liveMode} />
+      <main className="relative flex-1 shell:min-h-0">
+        <DiagnosticEngine liveMode={liveMode} footer={<CandidateFooter />} />
       </main>
-      <CandidateFooter />
     </div>
   );
 }

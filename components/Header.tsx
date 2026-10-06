@@ -11,9 +11,12 @@ export default function Header({ liveMode }: { liveMode: boolean }) {
   return (
     <header className="relative overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-navy-800 text-white">
       <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden />
-      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold-500/10 blur-3xl" aria-hidden />
+      <div
+        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold-500/10 blur-3xl"
+        aria-hidden
+      />
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 lg:px-8 shell:pb-8 shell:pt-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-navy-200">
             <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
@@ -37,11 +40,11 @@ export default function Header({ liveMode }: { liveMode: boolean }) {
           </div>
         </div>
 
-        <div className="mt-8 max-w-3xl">
-          <h1 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.75rem]">
+        <div className="mt-8 max-w-3xl shell:mt-3">
+          <h1 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.75rem] shell:text-[2rem]">
             <span aria-hidden>🏛️</span> Sushasan Governance Diagnostic Engine
           </h1>
-          <p className="mt-3 text-base leading-relaxed text-navy-100 sm:text-lg">
+          <p className="mt-3 text-base leading-relaxed text-navy-100 sm:text-lg shell:mt-1 shell:text-base">
             Synthesizing ground-level administrative insights from{" "}
             <a
               href="https://www.youtube.com/@SushasanThePodcast"
@@ -55,11 +58,11 @@ export default function Header({ liveMode }: { liveMode: boolean }) {
           </p>
         </div>
 
-        <ol className="mt-8 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
+        <ol className="mt-8 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4 shell:mt-4">
           {DELIVERABLES.map(({ n, label, Icon }) => (
             <li
               key={n}
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 backdrop-blur-sm"
+              className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 shell:py-2"
             >
               <span className="font-serif text-lg font-semibold text-gold-400">{n}</span>
               <Icon className="hidden h-4 w-4 shrink-0 text-navy-200 sm:block" />
