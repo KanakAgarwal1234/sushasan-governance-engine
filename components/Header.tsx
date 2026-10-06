@@ -12,7 +12,7 @@ export default function Header({ liveMode }: { liveMode: boolean }) {
     <header className="relative overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-navy-800 text-white">
       <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden />
       <div
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold-500/10 blur-3xl"
+        className="pointer-events-none absolute -right-36 -top-36 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgb(201_154_46/0.13),transparent_65%)]"
         aria-hidden
       />
 

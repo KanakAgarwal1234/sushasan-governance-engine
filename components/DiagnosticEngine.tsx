@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ChevronDown,
   CircleCheck,
@@ -16,7 +17,10 @@ import {
 import { FEATURED_EPISODES, findEpisodeByVideoId, thumbnailUrl } from "@/lib/episodes";
 import type { DiagnoseError, DiagnoseResponse } from "@/lib/types";
 import { extractVideoId } from "@/lib/youtube";
-import DiagnosticReport from "./DiagnosticReport";
+
+// The report UI is only needed after a run, so keep it out of the initial bundle.
+const loadReport = () => import("./DiagnosticReport");
+const DiagnosticReport = dynamic(loadReport);
 
 type Mode = "featured" | "custom";
 
@@ -75,6 +79,7 @@ export default function DiagnosticEngine({ liveMode, footer }: { liveMode: boole
     setLoading(true);
     setError(null);
     setResult(null);
+    void loadReport(); // fetch the report UI while the diagnostic runs
     requestAnimationFrame(revealOutput);
 
     const body =
