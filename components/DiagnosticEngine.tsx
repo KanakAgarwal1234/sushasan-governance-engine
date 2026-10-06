@@ -75,7 +75,13 @@ export default function DiagnosticEngine({ liveMode }: { liveMode: boolean }) {
       const data = (await res.json()) as DiagnoseResponse | DiagnoseError;
       if (!data.ok) throw new Error(data.error);
       setResult(data);
-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+      // Only bring the report into view when it is off-screen, so we never fight an in-progress trackpad scroll.
+      requestAnimationFrame(() => {
+        const top = resultRef.current?.getBoundingClientRect().top;
+        if (top !== undefined && (top < 0 || top > window.innerHeight * 0.6)) {
+          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
     } finally {
@@ -86,7 +92,8 @@ export default function DiagnosticEngine({ liveMode }: { liveMode: boolean }) {
   return (
     <div className="mx-auto -mt-4 grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[380px_minmax(0,1fr)] lg:px-8">
       {/* ── Input panel ───────────────────────────────── */}
-      <aside className="no-print lg:sticky lg:top-6 lg:self-start">
+      {/* Desktop: sticky, viewport-bounded and independently scrollable (see .sidebar-scroll). Mobile: normal flow. */}
+      <aside className="sidebar-scroll no-print lg:sticky lg:top-6 lg:self-start lg:overflow-y-auto lg:overscroll-y-contain [-webkit-overflow-scrolling:touch]">
         <div className="card relative overflow-hidden p-5">
           <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-navy-700 via-gold-500 to-navy-700" />
           <h2 className="font-serif text-xl font-semibold text-navy-900">Select an episode</h2>

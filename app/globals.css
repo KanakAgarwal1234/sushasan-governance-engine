@@ -43,6 +43,24 @@ body {
   background-size: 32px 32px;
 }
 
+/* Left "Select an episode" panel on desktop: bounded to the viewport so its
+   whole height (incl. the Run button) is always reachable by scrolling the
+   panel itself. 100vh is the fallback for browsers without dvh. */
+@media (min-width: 64rem) {
+  .sidebar-scroll {
+    max-height: calc(100vh - 3rem);
+    scrollbar-width: thin;
+    scrollbar-color: #c4d0e4 transparent;
+    border-radius: 1rem;
+  }
+
+  @supports (height: 100dvh) {
+    .sidebar-scroll {
+      max-height: calc(100dvh - 3rem);
+    }
+  }
+}
+
 .card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
